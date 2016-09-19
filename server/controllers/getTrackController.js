@@ -1,13 +1,19 @@
 //constants
-const folder = '/home/music-library/tune-library';
+const folder = '/Users/rbutcher/Music/iTunes/iTunes Media/Music';
 const url = require('url');
 
 //variables
 var fs = require('fs');
-//var Track = require("../data/Track");
+var mongoose = require('mongoose');
+var Track = require('../model/schemas/tracks');
+
+//need twice?
+//mongoose.Promise = Promise;
+
 var streamWriter = require('./helpers/streamWriter');
 var router = require('express').Router();
-router.route('/:artist/:album/:track?').get(getTrack);
+//router.route('/:artist/:album/:track?').get(getTrackOld);
+router.route('/:trackId/:trackName?').get(getTrack);
 
 serviceTypes = {
     "getTrackWithoutRanges" : function(request, response, file) {
@@ -17,13 +23,6 @@ serviceTypes = {
     "getTrackWithRanges" : function(request, response, file) {
         streamWriter.serveWithRanges(request, response, file);
     }
-}
-
-function getTrack(request, response) {
-    var serviceType = chooseServiceType(request);
-
-    var file = getFile(request);
-    serviceType(request, response, file);
 }
 
 function chooseServiceType(request) {
@@ -37,16 +36,15 @@ function chooseServiceType(request) {
     return func;
 }
 
-function getFile(request) {
-    //make nicer
-    var artist = request.params.artist;
-    var album = request.params.album;
-    var track = request.params.track;
+function getTrack(request, response) {
+    var serviceType = chooseServiceType(request);
 
-    var file = folder + '/' + artist + '/' + album + '/' + track;
-    console.log('Request for ' + file);
+    var trackId = request.params.trackId;
 
-    return file;
+    Track.findById(trackId, function(err, track) {
+        console.log('Request for [' + track.title + ']');
+        serviceType(request, response, track.location);
+    });
 }
 
 module.exports = router;
