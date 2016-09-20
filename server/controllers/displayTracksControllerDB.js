@@ -18,7 +18,7 @@ function getTracks(request, response) {
 
         for (i = 0; i < tracks.length; i++) {
             var track = tracks[i];
-            var newUrl = 'http://robertbutcher.co.uk/music-library/api/track/' + track.id + '/' + track.title.replace(/\//g, '_');;
+            var newUrl = '/api/track/' + track.id + '/' + track.title.replace(/[\/| ]/g, '_') + track.extension;
             tracksTree.push({
                 name: url.parse(newUrl).href
             });
