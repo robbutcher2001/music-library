@@ -5,12 +5,12 @@ const url = require('url');
 //variables
 var fs = require('fs');
 var mongoose = require('mongoose');
-var Track = require('../model/schemas/tracks');
+var Track = require('../../model/schemas/tracks');
 
 //need twice?
 //mongoose.Promise = Promise;
 
-var streamWriter = require('./helpers/streamWriter');
+var streamWriter = require('../helpers/streamWriter');
 var router = require('express').Router();
 //router.route('/:artist/:album/:track?').get(getTrackOld);
 router.route('/:trackId/:trackName?').get(getTrack);
