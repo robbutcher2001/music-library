@@ -6,14 +6,13 @@ const url = require('url');
 var mongoose = require('mongoose');
 var Artist = require('../../model/schemas/artists');
 var Album = require('../../model/schemas/albums');
-var Track = require('../../model/schemas/tracks');
 var router = require('express').Router();
-router.route('/').get(getAllTracksJson);
+router.route('/').get(getAllAlbumsJson);
 
 //us ES6 Promises and not embedded Mongoose Promises
 mongoose.Promise = Promise;
 
-function getAllTracksJson(request, response) {
+function getAllAlbumsJson(request, response) {
     getArtists().then(function(artists) {
         createJsonTree(artists).then(function(tree) {
             var rootNode = {};
@@ -72,42 +71,11 @@ function getAlbums(artist) {
         var rootNode = [];
 
         Album.find({ artistId : artist.id }, function(err, albums) {
-            var promiseChain = Promise.resolve();
-
             albums.forEach(function (album) {
-                promiseChain = promiseChain.then(function() {
-                    return getTracks(album);
-                }).then(function(tracks) {
-                    var albumNode = {};
-                    albumNode['id'] = album.id;
-                    albumNode['name'] = album.name;
-                    albumNode['tracks'] = tracks;
-                    rootNode.push(albumNode);
-                });
-            });
-
-            //resolves after the entire chain is resolved
-            promiseChain.then(function() {
-                //collected results are then bubbled back up the chain
-                resolve(rootNode);
-            });
-        });
-    });
-}
-
-function getTracks(album) {
-    return new Promise(function(resolve, reject) {
-        var rootNode = [];
-
-        Track.find({ albumId : album.id }, function(err, tracks) {
-            tracks.forEach(function (track) {
-                var titleNode = {};
-                titleNode['id'] = track.id;
-                titleNode['title'] = track.title;
-                titleNode['extension'] = track.extension;
-                titleNode['year'] = track.year;
-                titleNode['encoding'] = track.encoding;
-                rootNode.push(titleNode);
+                var albumNode = {};
+                albumNode['id'] = album.id;
+                albumNode['name'] = album.name;
+                rootNode.push(albumNode);
             });
 
             resolve(rootNode);
