@@ -1,6 +1,7 @@
 //variables
 var mongoose = require('mongoose');
 var express = require("express");
+var path = require("path");
 
 //controllers for artists
 var displayArtistsController = require('./controllers/artists/displayArtistsController');
@@ -29,10 +30,11 @@ app.use('/api/tracks', displayTracksController);
 app.use('/api/track', getTrackController);
 
 //static temp page
-app.use(express.static('public'));
-app.get('/', function(req, res){
-    res.sendFile('public/index.html');
-});
+//app.use(express.static('public'));
+// app.get('/', function(req, res){
+//     res.sendFile('public/index.html');
+// });
+app.use(express.static(path.join(__dirname,"../app/dist")));
 
 //root
 // app.get('/', function (req, res) {
