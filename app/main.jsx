@@ -12,6 +12,5 @@ var getArtistsCallback = function(artistsCallback){
 artistStore.onChange(getArtistsCallback);
 
 function render(){
-    console.log('Re-rendering');
     ReactDOM.render(<ArtistList list={artists} />, document.getElementById("container"));
 }
