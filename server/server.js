@@ -29,17 +29,8 @@ app.use('/api/albums', displayAlbumsController);
 app.use('/api/tracks', displayTracksController);
 app.use('/api/track', getTrackController);
 
-//static temp page
-//app.use(express.static('public'));
-// app.get('/', function(req, res){
-//     res.sendFile('public/index.html');
-// });
+//root routing
 app.use(express.static(path.join(__dirname,"../app/dist")));
-
-//root
-// app.get('/', function (req, res) {
-//   res.send('Hello World! Music Library bad boy in the making.');
-// });
 
 app.listen(4000, function () {
     console.log('Started listening on port', 4000);

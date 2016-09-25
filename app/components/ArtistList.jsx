@@ -1,18 +1,18 @@
-var React = require("react");
+var React = require('react');
 
 module.exports = React.createClass({
    render:function(){
    var ren = this.props;
        return(
-           <div className="butch">
+           <ul>
                 {
-                     this.props.artists.data.artists.map(function(artist,index){
+                     this.props.list.data.artists.map(function(artist,index){
                          return(
-                             <div key={"artist"+index}>{artist.name}</div>
+                             <li><a key={'artist'+index} href={'/music-library/artist/' + artist.id} title="{artist.name}">{artist.name}</a></li>
                          )
                      })
                 }
-           </div>
+           </ul>
        )
    }
 });
