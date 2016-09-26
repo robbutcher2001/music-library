@@ -1,6 +1,6 @@
 var artistService = require('../services/artistService');
 
-function ArtstStore(listener) {
+function ArtistStore(listener) {
     var listeners = [];
 
     function onChange(listener) {
@@ -19,4 +19,4 @@ function ArtstStore(listener) {
     }
 }
 
-module.exports = ArtstStore();
+module.exports = ArtistStore();

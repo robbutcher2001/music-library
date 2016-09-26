@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var AlbumList = require('./components/AlbumList.jsx');
-var artistStore = require('./stores/artistStore');
+var albumStore = require('./stores/albumStore');
 
 var albums = [];
 
@@ -10,8 +10,10 @@ var getAlbumsCallback = function(albumsCallback){
     render();
 };
 //TODO: one store?
-artistStore.onChange(getAlbumsCallback);
+var artistId = window.location.pathname.split('/artist/')[1].split('/')[0];
+albumStore.onChange(getAlbumsCallback, artistId);
 
 function render(){
-    //ReactDOM.render(<ArtistList list={artists} />, document.getElementById("container"));
+	//document.getElementById("title").innerHTML('Albums')
+    ReactDOM.render(<AlbumList list={albums} />, document.getElementById("container"));
 }
