@@ -9,6 +9,7 @@ var getArtistController = require('./controllers/artists/getArtistController');
 
 //controllers for albums
 var displayAlbumsController = require('./controllers/albums/displayAlbumsController');
+var getAlbumController = require('./controllers/albums/getAlbumController');
 
 //controllers for tracks
 var displayTracksController = require('./controllers/tracks/displayTracksControllerDB');
@@ -28,16 +29,22 @@ app.get('/artist/*', function(req, res) {
 	res.sendFile(path.join(__dirname,'../app/dist/artist.html'));
 });
 
-//routing for albums
+//routing for albums api
 app.use('/api/albums', displayAlbumsController);
+app.use('/api/album', getAlbumController);
 //routing for albums markup
 app.get('/album/*', function(req, res) {
 	res.sendFile(path.join(__dirname,'../app/dist/album.html'));
 });
 
-//routing for tracks
+//routing for tracks api
 app.use('/api/tracks', displayTracksController);
+//routing for tracks audio
 app.use('/api/track', getTrackController);
+//routing for tracks markup
+app.get('/track/*', function(req, res) {
+	res.sendFile(path.join(__dirname,'../app/dist/track.html'));
+});
 
 //root routing
 app.use(express.static(path.join(__dirname,'../app/dist')));

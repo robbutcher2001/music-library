@@ -1,11 +1,11 @@
 var $ = require('jquery');
-var musicAPI = '/music-library/api/track/';
+var musicAPI = '/music-library/api/album/';
 
 module.exports = {
-    getAlbums: function(artistId) {
+    getTracks: function(albumId) {
         return new Promise(function(resolve, reject) {
             $.ajax({
-                url: musicAPI + artistId,
+                url: musicAPI + albumId,
                 method: "GET",
                 dataType: "json",
                 success: function(response) {

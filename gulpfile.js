@@ -34,8 +34,18 @@ gulp.task("bundle_album", function () {
         .pipe(gulp.dest("app/dist"))
 });
 
-gulp.task("copy", ["bundle_main", "bundle_artist", bundle_album], function () {
-    return gulp.src(["app/index.html","app/artist.html","app/album.html"/*,"app/lib/bootstrap-css/css/bootstrap.min.css","app/style.css"*/])
+gulp.task("bundle_track", function () {
+    return browserify({
+        entries: "./app/track.jsx",
+        debug: true
+    }).transform(reactify)
+        .bundle()
+        .pipe(source("track.js"))
+        .pipe(gulp.dest("app/dist"))
+});
+
+gulp.task("copy", ["bundle_main", "bundle_artist", "bundle_album", "bundle_track"], function () {
+    return gulp.src(["app/index.html", "app/artist.html", "app/album.html", "app/track.html"/*,"app/lib/bootstrap-css/css/bootstrap.min.css","app/style.css"*/])
         .pipe(gulp.dest("app/dist"));
 });
 

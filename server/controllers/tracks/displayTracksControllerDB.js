@@ -101,13 +101,13 @@ function getTracks(album) {
 
         Track.find({ albumId : album.id }, function(err, tracks) {
             tracks.forEach(function (track) {
-                var titleNode = {};
-                titleNode['id'] = track.id;
-                titleNode['title'] = track.title;
-                titleNode['extension'] = track.extension;
-                titleNode['year'] = track.year;
-                titleNode['encoding'] = track.encoding;
-                rootNode.push(titleNode);
+                var trackNode = {};
+                trackNode['id'] = track.id;
+                trackNode['title'] = track.title;
+                trackNode['extension'] = track.extension;
+                trackNode['year'] = track.year;
+                trackNode['encoding'] = track.encoding;
+                rootNode.push(trackNode);
             });
 
             resolve(rootNode);
