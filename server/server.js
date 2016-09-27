@@ -49,6 +49,23 @@ app.get('/track/*', function(req, res) {
 //root routing
 app.use(express.static(path.join(__dirname,'../app/dist')));
 
+//test
+var Router = 'react-router';
+function router (req, res, next) {
+	  var context = {
+	    	routes: routes, location: req.url
+	  };
+	  Router.create(context).run(function ran (Handler, state) {
+	    	res.render('layout', {
+	      		reactHtml: React.renderToString(Handler)
+	    	});
+	  });
+}
+app.use(router);
+
+
+
+
 app.listen(4000, function () {
     console.log('Started listening on port', 4000);
 });
