@@ -50,18 +50,18 @@ app.get('/track/*', function(req, res) {
 app.use(express.static(path.join(__dirname,'../app/dist')));
 
 //test
-var Router = 'react-router';
-function router (req, res, next) {
-	  var context = {
-	    	routes: routes, location: req.url
-	  };
-	  Router.create(context).run(function ran (Handler, state) {
-	    	res.render('layout', {
-	      		reactHtml: React.renderToString(Handler)
-	    	});
-	  });
-}
-app.use(router);
+//var Router = 'react-router';
+//function router (req, res, next) {
+//	  var context = {
+//	    	routes: routes, location: req.url
+//	  };
+//	  Router.create(context).run(function ran (Handler, state) {
+//	    	res.render('layout', {
+//	      		reactHtml: React.renderToString(Handler)
+//	    	});
+//	  });
+//}
+//app.use(router);
 
 
 
