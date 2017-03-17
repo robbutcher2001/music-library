@@ -1,5 +1,5 @@
 //constants
-const folder = '/Users/rbutcher/Music/iTunes/iTunes Media/Music';
+const folder = '/usr/media/app';
 const url = require('url');
 
 //variables

@@ -16,7 +16,7 @@ var displayTracksController = require('./controllers/tracks/displayTracksControl
 var getTrackController = require('./controllers/tracks/getTrackController');
 
 //connect to mongodb database
-mongoose.connect('mongodb://localhost/test-music-app');
+mongoose.connect('mongodb://192.168.1.1/test-music-app');
 
 //express request pipeline
 var app = express();
