@@ -5,7 +5,7 @@ $(document).ready(function(){
 var Tracks = {
 	populateTracks: function(servlet, action, completedMessage) {
 		$.ajax({
-			url: "/music-library/api/tracks",
+			url: "/api/tracks",
 			type: "GET",
 			dataType: "json",
 			error: function(response) {
@@ -18,7 +18,7 @@ var Tracks = {
 							$('#container').append('<p>' + album.name + '</p>');
 							$('#container').append('<ul>');
 							$.each(album.tracks, function(index, track) {
-								$('#container').append('<li>' + track.title + '<audio preload="none" style="height:50px;width:100%" controls><source src="/music-library/api/track/' + track.id + '" type="' + track.encoding + '" /></audio></li>');
+								$('#container').append('<li>' + track.title + '<audio preload="none" style="height:50px;width:100%" controls><source src="/api/track/' + track.id + '" type="' + track.encoding + '" /></audio></li>');
 							});
 							$('#container').append('</ul>');
 						});
