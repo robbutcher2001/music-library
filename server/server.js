@@ -16,7 +16,7 @@ var displayTracksController = require('./controllers/tracks/displayTracksControl
 var getTrackController = require('./controllers/tracks/getTrackController');
 
 //connect to mongodb database
-mongoose.connect('mongodb://database-service-container/music-app-db');
+mongoose.connect('mongodb://database-service-container-1/music-app-db');
 
 //express request pipeline
 var app = express();
