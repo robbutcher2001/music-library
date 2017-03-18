@@ -31,7 +31,7 @@ function getFilesRecursive(folder) {
             });
         } else {
             //make substring better
-            var u = 'http://robertbutcher.co.uk/music-library/api/track/' + folder.substring(33) + '/' + fileName;
+            var u = '/api/track/' + folder.substring(33) + '/' + fileName;
             fileTree.push({
                 name: url.parse(u).href
             });
