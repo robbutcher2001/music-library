@@ -18,6 +18,7 @@ streamWriter.serveWithRanges = function(request, response, file) {
 
     response.status(206).header({
         'Accept-Ranges': 'bytes',
+        //TODO: should this be track.encoding?
         'Content-Type': 'audio/mpeg',
         'Content-Length': trackLength,
         'Content-Range': "bytes " + start + "-" + end + "/" + stat.size
@@ -30,6 +31,7 @@ streamWriter.serveWithoutRanges = function(request, response, file) {
     var stat = fs.statSync(file);
 
     response.writeHead(200, {
+        //TODO: should this be track.encoding?
         'Content-Type': 'audio/mpeg',
         'Content-Length': stat.size
     });
