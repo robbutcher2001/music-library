@@ -1,22 +1,22 @@
 Webapp > Service calls
-- /api/artists
+- /music-library/api/artists
 	- get all artists: JSON
-- /api/albums
+- /music-library/api/albums
 	- get all albums: JSON
-- /api/tracks
+- /music-library/api/tracks
 	- get all tracks: JSON
 
-- /api/artist/57e42ac10f678346d6d00f85
+- /music-library/api/artist/57e42ac10f678346d6d00f85
 	- get artist: JSON
-- /api/album/57e42ac10f678346d6d00f86
+- /music-library/api/album/57e42ac10f678346d6d00f86
 	- get album: JSON
-- /api/track/57e42ac10f678346d6d00f87
+- /music-library/api/track/57e42ac10f678346d6d00f87
 	- get track: audio
 
 Browser > Webapp calls
-- /artist/57e42ac10f678346d6d00f85
+- /music-library/artist/57e42ac10f678346d6d00f85
 	- get artist's album list: HTML
-- /album/57e42ac10f678346d6d00f86
+- /music-library/album/57e42ac10f678346d6d00f86
 	- get album's track list: HTML
-- /track/57e42ac10f678346d6d00f87
+- /music-library/track/57e42ac10f678346d6d00f87
 	- get track info and audio tag: HTML

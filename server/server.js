@@ -22,32 +22,32 @@ mongoose.connect('mongodb://database-service-container/music-app-db');
 var app = express();
 
 //routing for artists api
-app.use('/api/artists', displayArtistsController);
-app.use('/api/artist', getArtistController);
+app.use('/music-library/api/artists', displayArtistsController);
+app.use('/music-library/api/artist', getArtistController);
 //routing for artists markup
-app.get('/artist/*', function(req, res) {
+app.get('/music-library/artist/*', function(req, res) {
 	res.sendFile(path.join(__dirname,'../app/dist/artist.html'));
 });
 
 //routing for albums api
-app.use('/api/albums', displayAlbumsController);
-app.use('/api/album', getAlbumController);
+app.use('/music-library/api/albums', displayAlbumsController);
+app.use('/music-library/api/album', getAlbumController);
 //routing for albums markup
-app.get('/album/*', function(req, res) {
+app.get('/music-library/album/*', function(req, res) {
 	res.sendFile(path.join(__dirname,'../app/dist/album.html'));
 });
 
 //routing for tracks api
-app.use('/api/tracks', displayTracksController);
+app.use('/music-library/api/tracks', displayTracksController);
 //routing for tracks audio
-app.use('/api/track', getTrackController);
+app.use('/music-library/api/track', getTrackController);
 //routing for tracks markup
-app.get('/track/*', function(req, res) {
+app.get('/music-library/track/*', function(req, res) {
 	res.sendFile(path.join(__dirname,'../app/dist/track.html'));
 });
 
 //root routing
-app.use(express.static(path.join(__dirname,'../app/dist')));
+app.use('/music-library', express.static(path.join(__dirname,'../app/dist')));
 
 //test
 //var Router = 'react-router';

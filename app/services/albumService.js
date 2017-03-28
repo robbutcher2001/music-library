@@ -1,5 +1,5 @@
 var $ = require('jquery');
-var musicAPI = '/api/artist/';
+var musicAPI = '/music-library/api/artist/';
 
 module.exports = {
     getAlbums: function(artistId) {

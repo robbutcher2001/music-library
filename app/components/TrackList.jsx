@@ -7,7 +7,7 @@ module.exports = React.createClass({
                 {
                      this.props.list.data.tracks.map(function(track,index){
                          return(
-                             <li key={'track'+index}><a href={'/track/' + track.id} title={track.title}>{track.title}</a>
+                             <li key={'track'+index}><a href={'/music-library/track/' + track.id} title={track.title}>{track.title}</a>
                              	<ul>
                              		<li>{track.year}</li>
                              		<li>{track.encoding}</li>
