@@ -16,11 +16,11 @@ var getArtistsCallback = function(artistsCallback){
 };
 artistStore.onChange(getArtistsCallback);
 
-function renderOld(){
+function render(){
     ReactDOM.render(<ArtistList list={artists} />, document.getElementById("container"));
 }
 
-function render(){
+function renderNewButBroken(){
     ReactDOM.render((
         <Router>
             //<Route path="/" component={() => (<ArtistList list={artists} />)}/>

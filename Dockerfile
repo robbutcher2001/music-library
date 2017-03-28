@@ -15,4 +15,7 @@ RUN npm install gulp -g
 RUN npm install gulp --save-dev
 RUN gulp
 
+# Create cache media dir
+RUN mkdir ./track-cache
+
 CMD [ "npm", "start" ]

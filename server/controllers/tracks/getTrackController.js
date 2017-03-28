@@ -1,11 +1,32 @@
 //constants
 const folder = '/usr/media/app';
-const url = require('url');
+const bucketUrl = 'robertbutcher.co.uk-music-library';
+// const url = require('url');
 
 //variables
 var fs = require('fs');
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 var Track = require('../../model/schemas/tracks');
+
+// Load the S3 SDK for JavaScript
+// TODO: add only call to S3
+// var AWS = require('aws-sdk/clients/s3');
+var AWS = require('aws-sdk');
+// Load credentials and set region from JSON file
+// TODO: regen and move to DB and store in private container image
+// http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials.html
+AWS.config.loadFromPath('./s3_config.json');
+
+//just for local
+var proxy = require('proxy-agent');
+
+AWS.config.update({
+  httpOptions: { agent: proxy('http://172.26.193.2:8080/') }
+});
+//end just for local
+
+// Create S3 service object
+var s3 = new AWS.S3();
 
 //need twice?
 //mongoose.Promise = Promise;
@@ -43,7 +64,30 @@ function getTrack(request, response) {
 
     Track.findById(trackId, function(err, track) {
         console.log('Request for [' + track.title + ']');
-        serviceType(request, response, track.location);
+        downloadTrack(trackId, track).then(function(file) {
+            serviceType(request, response, file.path);
+        }).catch(function(error) {
+            console.error(error, error.stack);
+        });
+    });
+}
+
+//TODO: copied from S3 watcher, move to reusable area
+function downloadTrack(trackId, track) {
+    return new Promise(function(resolve, reject) {
+        var trackParams = {
+            Bucket: bucketUrl,
+            Key: track.s3key
+        };
+        var cacheTemp = fs.createWriteStream('./track-cache/' + trackId + '.' + track.extension);
+        //TODO: add error handling
+        s3.getObject(trackParams).
+          on('httpData', function(chunk) { cacheTemp.write(chunk); }).
+          on('httpDone', function() {
+              cacheTemp.end();
+              resolve(cacheTemp);
+          }).
+          send();
     });
 }
 
