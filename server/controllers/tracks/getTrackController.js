@@ -72,6 +72,13 @@ function getTrack(request, response) {
     });
 }
 
+function attemptCacheRetrieval(trackId, track) {
+    //TODO: this is not in the schema yet
+    if (track.cached == true) {
+
+    }
+}
+
 //TODO: copied from S3 watcher, move to reusable area
 function downloadTrack(trackId, track) {
     return new Promise(function(resolve, reject) {
