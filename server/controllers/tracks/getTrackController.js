@@ -12,21 +12,17 @@ var Track = require('../../model/schemas/tracks');
 // TODO: add only call to S3
 // var AWS = require('aws-sdk/clients/s3');
 var AWS = require('aws-sdk');
-// Load credentials and set region from JSON file
-// TODO: regen and move to DB and store in private container image
-// http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials.html
-AWS.config.loadFromPath('./s3_config.json');
 
 //just for local
-// var proxy = require('proxy-agent');
-//
-// AWS.config.update({
-//   httpOptions: { agent: proxy('http://172.26.193.2:8080/') }
-// });
+var proxy = require('proxy-agent');
+
+AWS.config.update({
+  httpOptions: { agent: proxy('http://172.26.193.2:8080/') }
+});
 //end just for local
 
 // Create S3 service object
-var s3 = new AWS.S3();
+var s3 = new AWS.S3({signatureVersion: 'v4'});
 
 //need twice?
 //mongoose.Promise = Promise;
