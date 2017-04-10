@@ -7,6 +7,7 @@ const bucketUrl = 'robertbutcher.co.uk-music-library';
 var fs = require('fs');
 // var mongoose = require('mongoose');
 var Track = require('../../model/schemas/tracks');
+var cacheRetrievalService = require('../helpers/cacheRetrievalService');
 
 // Load the S3 SDK for JavaScript
 // TODO: add only call to S3
@@ -60,19 +61,42 @@ function getTrack(request, response) {
 
     Track.findById(trackId, function(err, track) {
         console.log('Request for [' + track.title + ']');
-        downloadTrack(trackId, track).then(function(file) {
-            serviceType(request, response, file.path);
+        attemptCacheRetrieval(trackId).then(function(trackPath) {
+            if (trackPath != null) {
+                serviceType(request, response, trackPath);
+                console.log('Track pulled from DB cache');
+            }
+            else {
+                downloadTrack(trackId, track).then(function(file) {
+                    serviceType(request, response, file.path);
+                    console.log('Track downloaded from S3');
+                }).catch(function(error) {
+                    console.error(error, error.stack);
+                });
+            }
         }).catch(function(error) {
             console.error(error, error.stack);
         });
     });
 }
 
-function attemptCacheRetrieval(trackId, track) {
-    //TODO: this is not in the schema yet
-    if (track.cached == true) {
-
-    }
+function attemptCacheRetrieval(trackId) {
+    return new Promise(function(resolve, reject) {
+        cacheRetrievalService.checkCache(trackId).then(function(cached) {
+            if (cached == true) {
+                cacheRetrievalService.getCache(trackId).then(function(trackPath) {
+                    resolve(trackPath);
+                }).catch(function(error) {
+                    console.error(error, error.stack);
+                });
+            }
+            else {
+                resolve(null);
+            }
+        }).catch(function(error) {
+            console.error(error, error.stack);
+        });
+    });
 }
 
 //TODO: copied from S3 watcher, move to reusable area
