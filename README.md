@@ -1,2 +1,2 @@
-# music-library
-Access music from home over the web
+# music-library-webapp
+Access cached music from S3 bucket over the web
